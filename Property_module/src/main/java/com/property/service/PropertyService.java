@@ -2,6 +2,7 @@ package com.property.service;
 
 import org.springframework.stereotype.Service;
 
+import com.property.dto.PropertyDto;
 import com.property.repository.AreaRepository;
 import com.property.repository.CityRepository;
 import com.property.repository.PropertyPhotosRepository;
@@ -30,6 +31,10 @@ public class PropertyService {
 		this.roomsRepository = roomsRepository;
 		this.roomsAvailabilityRepository = roomsAvailabilityRepository;
 		this.photosRepository = photosRepository;
+	}
+	
+	public PropertyDto addProperty(PropertyDto propertyDto) {
+		return null;
 	}
 
 }
