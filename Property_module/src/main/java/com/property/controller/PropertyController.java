@@ -27,12 +27,13 @@ public class PropertyController {
 
 
 	@PostMapping(
-			value = "/add-property",
-		    consumes = MediaType.MULTIPART_FORM_DATA_VALUE,  // Ensures the endpoint accepts multipart/form-data
-		    produces = MediaType.APPLICATION_JSON_VALUE
+			value = "/add-property"//,
+//		    consumes = MediaType.MULTIPART_FORM_DATA_VALUE,  // Ensures the endpoint accepts multipart/form-data
+//		    produces = MediaType.APPLICATION_JSON_VALUE
 			)
 	public ResponseEntity<APIResponse<PropertyDto>> addProperty(
 	        @RequestParam("property") String propertyJson){
+		System.out.println("Incoming JSON: " + propertyJson);
 		
 		ObjectMapper objectMapper=new ObjectMapper();
 		PropertyDto dto = null;
@@ -40,7 +41,8 @@ public class PropertyController {
 				dto = objectMapper.readValue(propertyJson, PropertyDto.class);
 			} catch (JsonProcessingException e) {
 				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-			} 
+			}
+	        System.out.println(dto.toString());
 	        PropertyDto property = propertyService.addProperty(dto);
 
 		    // Create response object

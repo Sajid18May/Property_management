@@ -51,12 +51,13 @@ public class PropertyService {
 		Property savedProperty = propertyRepository.save(property);
 		PropertyDto dto=new PropertyDto();
 		
-		BeanUtils.copyProperties(savedProperty, dto);
-		dto.setArea(savedProperty.getArea().getName());
-		dto.setCity(savedProperty.getCity().getName());
-		dto.setState(savedProperty.getState().getName());
-		
-		return dto;
+//		BeanUtils.copyProperties(savedProperty, dto);
+//		dto.setArea(savedProperty.getArea().getName());
+//		dto.setCity(savedProperty.getCity().getName());
+//		dto.setState(savedProperty.getState().getName());
+//		
+//		return dto;
+		return propertyDto;
 	}
 
 }
