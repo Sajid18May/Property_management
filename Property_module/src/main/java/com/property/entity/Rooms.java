@@ -5,6 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Rooms {
@@ -14,4 +16,8 @@ public class Rooms {
 
 	private String roomType;
 	private double basePrice;
+	
+	@ManyToOne
+	@JoinColumn(name = "property_id")
+	private Property property;
 }

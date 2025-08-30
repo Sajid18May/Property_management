@@ -23,7 +23,7 @@ public class Property {
 	private int noOfGuestsAllowed;
 	
 	@ManyToOne
-	@JoinColumn(name="city_id")
+	@JoinColumn(name="state_id")
 	private State state;
 	
 	@ManyToOne
@@ -31,7 +31,7 @@ public class Property {
 	private City city;
 	
 	@ManyToOne
-	@JoinColumn(name="city_id")
+	@JoinColumn(name="area_id")
 	private Area area;
 	
 	@OneToMany(mappedBy = "property",cascade = CascadeType.ALL,orphanRemoval = true)
