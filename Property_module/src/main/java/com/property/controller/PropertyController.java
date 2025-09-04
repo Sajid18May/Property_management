@@ -17,41 +17,37 @@ import com.property.service.PropertyService;
 @RestController
 @RequestMapping("/api/v1/property")
 public class PropertyController {
-	
+
 	private PropertyService propertyService;
-	
-	
+
 	public PropertyController(PropertyService propertyService) {
 		this.propertyService = propertyService;
 	}
 
-
-	@PostMapping(
-			value = "/add-property"//,
+	@PostMapping(value = "/add-property"// ,
 //		    consumes = MediaType.MULTIPART_FORM_DATA_VALUE,  // Ensures the endpoint accepts multipart/form-data
 //		    produces = MediaType.APPLICATION_JSON_VALUE
-			)
-	public ResponseEntity<APIResponse<PropertyDto>> addProperty(
-	        @RequestParam("property") String propertyJson){
+	)
+	public ResponseEntity<APIResponse<PropertyDto>> addProperty(@RequestParam("property") String propertyJson) {
 		System.out.println("Incoming JSON: " + propertyJson);
-		
-		ObjectMapper objectMapper=new ObjectMapper();
+
+		ObjectMapper objectMapper = new ObjectMapper();
 		PropertyDto dto = null;
-	        try {
-				dto = objectMapper.readValue(propertyJson, PropertyDto.class);
-			} catch (JsonProcessingException e) {
-				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-			}
-	        System.out.println(dto.toString());
-	        PropertyDto property = propertyService.addProperty(dto);
+		try {
+			dto = objectMapper.readValue(propertyJson, PropertyDto.class);
+		} catch (JsonProcessingException e) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		System.out.println(dto.toString());
+		PropertyDto property = propertyService.addProperty(dto);
 
-		    // Create response object
-		    APIResponse<PropertyDto> response = new APIResponse<>();
-		    response.setMessage("Property added");
-		    response.setStatus(201);
-		    response.setData(property);
+		// Create response object
+		APIResponse<PropertyDto> response = new APIResponse<>();
+		response.setMessage("Property added");
+		response.setStatus(201);
+		response.setData(property);
 
-		    return new ResponseEntity<>(response, HttpStatus.valueOf(response.getStatus()));
+		return new ResponseEntity<>(response, HttpStatus.valueOf(response.getStatus()));
 	}
 
 }

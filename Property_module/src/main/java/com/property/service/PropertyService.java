@@ -37,20 +37,20 @@ public class PropertyService {
 		this.roomsAvailabilityRepository = roomsAvailabilityRepository;
 		this.photosRepository = photosRepository;
 	}
-	
+
 	public PropertyDto addProperty(PropertyDto propertyDto) {
-		State state=stateRepository.findByName(propertyDto.getState());
-		City city=cityRepository.findByName(propertyDto.getCity());
-		Area area=areaRepository.findByName(propertyDto.getArea());
-		Property property=new Property();
+		State state = stateRepository.findByName(propertyDto.getState());
+		City city = cityRepository.findByName(propertyDto.getCity());
+		Area area = areaRepository.findByName(propertyDto.getArea());
+		Property property = new Property();
 		BeanUtils.copyProperties(propertyDto, property);
 		property.setArea(area);
 		property.setCity(city);
 		property.setState(state);
-		
+
 		Property savedProperty = propertyRepository.save(property);
-		PropertyDto dto=new PropertyDto();
-		
+		PropertyDto dto = new PropertyDto();
+
 //		BeanUtils.copyProperties(savedProperty, dto);
 //		dto.setArea(savedProperty.getArea().getName());
 //		dto.setCity(savedProperty.getCity().getName());
