@@ -7,5 +7,5 @@ import com.userservice.entity.AppUser;
 
 @Repository
 public interface AppUserRepository extends JpaRepository<AppUser, Long>{
-
+	AppUser findAppUserByUsername(String username);
 }

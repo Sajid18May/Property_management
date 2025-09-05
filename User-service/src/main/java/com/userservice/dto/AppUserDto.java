@@ -1,14 +1,6 @@
-package com.userservice.entity;
+package com.userservice.dto;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-
-@Entity
-public class AppUser {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+public class AppUserDto {
 	private long id;
 	private String name;
 	private String email;
@@ -51,5 +43,5 @@ public class AppUser {
 	public void setRole(String role) {
 		this.role = role;
 	}
-
+	
 }
