@@ -11,7 +11,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.userservice.filter.JwtFilter;
 import com.userservice.service.LoginService;
 
 @Configuration
@@ -19,9 +21,11 @@ import com.userservice.service.LoginService;
 public class SecurityConfig {
 
 	private LoginService loginService;
+	private JwtFilter jwtFilter;
 	
-	public SecurityConfig(LoginService loginService) {
+	public SecurityConfig(LoginService loginService, JwtFilter jwtFilter) {
 		this.loginService = loginService;
+		this.jwtFilter = jwtFilter;
 	}
 	
 	@Bean
@@ -45,6 +49,8 @@ public class SecurityConfig {
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		return http.csrf(csrf->csrf.disable())
 				.authorizeHttpRequests(req->req.anyRequest().permitAll())
+				.authenticationProvider(authenticationProvider())
+				.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
 				.build();
 	}
 
