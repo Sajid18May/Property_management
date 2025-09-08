@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -24,11 +25,12 @@ public class PropertyController {
 		this.propertyService = propertyService;
 	}
 
-	@PostMapping(value = "/add-property"// ,
-//		    consumes = MediaType.MULTIPART_FORM_DATA_VALUE,  // Ensures the endpoint accepts multipart/form-data
-//		    produces = MediaType.APPLICATION_JSON_VALUE
+	@PostMapping(value = "/add-property" ,
+		    consumes = MediaType.MULTIPART_FORM_DATA_VALUE,  // Ensures the endpoint accepts multipart/form-data
+		    produces = MediaType.APPLICATION_JSON_VALUE
 	)
-	public ResponseEntity<APIResponse<PropertyDto>> addProperty(@RequestParam("property") String propertyJson) {
+	public ResponseEntity<APIResponse<PropertyDto>> addProperty(@RequestParam("property") String propertyJson,
+			@RequestParam("files") MultipartFile[] files) {
 		System.out.println("Incoming JSON: " + propertyJson);
 
 		ObjectMapper objectMapper = new ObjectMapper();
@@ -39,7 +41,7 @@ public class PropertyController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		System.out.println(dto.toString());
-		PropertyDto property = propertyService.addProperty(dto);
+		PropertyDto property = propertyService.addProperty(dto,files);
 
 		// Create response object
 		APIResponse<PropertyDto> response = new APIResponse<>();

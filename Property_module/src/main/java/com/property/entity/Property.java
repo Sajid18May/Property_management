@@ -36,6 +36,9 @@ public class Property {
 	
 	@OneToMany(mappedBy = "property",cascade = CascadeType.ALL,orphanRemoval = true)
 	private List<Rooms> rooms;
+	
+	@OneToMany(mappedBy = "property",cascade = CascadeType.ALL,orphanRemoval = true)
+	private List<PropertyPhotos> photos;
 
 	public long getId() {
 		return id;
@@ -116,6 +119,13 @@ public class Property {
 	public void setRooms(List<Rooms> rooms) {
 		this.rooms = rooms;
 	}
-	
+
+	public List<PropertyPhotos> getPhotos() {
+		return photos;
+	}
+
+	public void setPhotos(List<PropertyPhotos> photos) {
+		this.photos = photos;
+	}
 	
 }

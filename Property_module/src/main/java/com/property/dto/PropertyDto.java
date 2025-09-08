@@ -2,7 +2,10 @@ package com.property.dto;
 
 import java.util.List;
 
+import com.property.entity.PropertyPhotos;
+
 public class PropertyDto {
+	private long id;
 	private String name;
 	private int noOfRooms;
 	private int noOfBeds;
@@ -12,6 +15,13 @@ public class PropertyDto {
 	private String city;
 	private String area;
 	private List<RoomsDto> rooms;
+	private List<PropertyPhotos> photos;
+	public long getId() {
+		return id;
+	}
+	public void setId(long id) {
+		this.id = id;
+	}
 	public String getName() {
 		return name;
 	}
@@ -65,6 +75,12 @@ public class PropertyDto {
 	}
 	public void setRooms(List<RoomsDto> rooms) {
 		this.rooms = rooms;
+	}
+	public List<PropertyPhotos> getPhotos() {
+		return photos;
+	}
+	public void setPhotos(List<PropertyPhotos> photos) {
+		this.photos = photos;
 	}
 	
 }
