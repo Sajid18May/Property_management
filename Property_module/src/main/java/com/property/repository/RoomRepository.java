@@ -3,9 +3,9 @@ package com.property.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.property.entity.Rooms;
+import com.property.entity.Room;
 
 @Repository
-public interface RoomsRepository extends JpaRepository<Rooms, Long>{
+public interface RoomRepository extends JpaRepository<Room, Long>{
 
 }

@@ -8,7 +8,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 @Entity
-public class Rooms {
+public class Room {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
