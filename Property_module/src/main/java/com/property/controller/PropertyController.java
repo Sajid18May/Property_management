@@ -1,5 +1,9 @@
 package com.property.controller;
 
+import java.time.LocalDate;
+import java.util.List;
+
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +17,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.property.dto.APIResponse;
 import com.property.dto.PropertyDto;
+import com.property.entity.Property;
 import com.property.service.PropertyService;
 
 @RestController
@@ -25,10 +30,10 @@ public class PropertyController {
 		this.propertyService = propertyService;
 	}
 
-	@PostMapping(value = "/add-property" ,
-		    consumes = MediaType.MULTIPART_FORM_DATA_VALUE,  // Ensures the endpoint accepts multipart/form-data
-		    produces = MediaType.APPLICATION_JSON_VALUE
-	)
+	@PostMapping(value = "/add-property", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, // Ensures the endpoint
+																							// accepts
+																							// multipart/form-data
+			produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<APIResponse<PropertyDto>> addProperty(@RequestParam("property") String propertyJson,
 			@RequestParam("files") MultipartFile[] files) {
 		System.out.println("Incoming JSON: " + propertyJson);
@@ -41,13 +46,20 @@ public class PropertyController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		System.out.println(dto.toString());
-		PropertyDto property = propertyService.addProperty(dto,files);
+		PropertyDto property = propertyService.addProperty(dto, files);
 
 		// Create response object
 		APIResponse<PropertyDto> response = new APIResponse<>();
 		response.setMessage("Property added");
 		response.setStatus(201);
 		response.setData(property);
+
+		return new ResponseEntity<>(response, HttpStatus.valueOf(response.getStatus()));
+	}
+
+	public ResponseEntity<APIResponse<List<Property>>> searchProperty(@RequestParam String name,
+			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate localDate) {
+		APIResponse<List<Property>> response = propertyService.searchProperty(name, localDate);
 
 		return new ResponseEntity<>(response, HttpStatus.valueOf(response.getStatus()));
 	}
