@@ -1,8 +1,7 @@
-package com.property.dto;
+package com.booking.dto;
 
 import java.util.List;
 
-import com.property.entity.PropertyPhotos;
 
 public class PropertyDto {
 	private long id;
@@ -15,7 +14,7 @@ public class PropertyDto {
 	private String city;
 	private String area;
 	private List<RoomsDto> rooms;
-	private List<String> imgUrls;
+	private List<String> imageUrls;
 	public long getId() {
 		return id;
 	}
@@ -76,12 +75,11 @@ public class PropertyDto {
 	public void setRooms(List<RoomsDto> rooms) {
 		this.rooms = rooms;
 	}
-	public List<String> getImgUrls() {
-		return imgUrls;
+	public List<String> getImageUrls() {
+		return imageUrls;
 	}
-	public void setImgUrls(List<String> imgUrls) {
-		this.imgUrls = imgUrls;
+	public void setImageUrls(List<String> imageUrls) {
+		this.imageUrls = imageUrls;
 	}
-	
 	
 }

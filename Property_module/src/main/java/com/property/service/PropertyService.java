@@ -77,25 +77,24 @@ public class PropertyService {
 		property.setState(state);
 
 		Property savedProperty = propertyRepository.save(property);
-		List<String> fileUrls=s3Service.uploadFiles(files);
-		List<PropertyPhotos> propertyphotos=new ArrayList<>();
-		for(String url:fileUrls) {
-			PropertyPhotos photos=new PropertyPhotos();
-			photos.setUrl(url);
-			photos.setProperty(savedProperty);
-			photosRepository.save(photos);
-			propertyphotos.add(photos);
-		}
-		propertyDto.setPhotos(propertyphotos);
+//		List<String> fileUrls=s3Service.uploadFiles(files);
+//		List<PropertyPhotos> propertyphotos=new ArrayList<>();
+//		for(String url:fileUrls) {
+//			PropertyPhotos photos=new PropertyPhotos();
+//			photos.setUrl(url);
+//			photos.setProperty(savedProperty);
+//			photosRepository.save(photos);
+//			propertyphotos.add(photos);
+//		}
 		PropertyDto dto = new PropertyDto();
-
-//		BeanUtils.copyProperties(savedProperty, dto);
-//		dto.setArea(savedProperty.getArea().getName());
-//		dto.setCity(savedProperty.getCity().getName());
-//		dto.setState(savedProperty.getState().getName());
-//		
-//		return dto;
-		return propertyDto;
+		
+		BeanUtils.copyProperties(savedProperty, dto);
+		dto.setArea(savedProperty.getArea().getName());
+		dto.setCity(savedProperty.getCity().getName());
+		dto.setState(savedProperty.getState().getName());
+		//dto.setImgUrls(fileUrls);
+		return dto;
+		//return propertyDto;
 	}
 	
 	public APIResponse<List<Property>> searchProperty(String name,LocalDate date) {

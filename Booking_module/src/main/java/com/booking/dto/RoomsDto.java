@@ -1,4 +1,4 @@
-package com.property.dto;
+package com.booking.dto;
 
 public class RoomsDto {
 	private long id;
@@ -22,4 +22,5 @@ public class RoomsDto {
 	public void setBasePrice(double basePrice) {
 		this.basePrice = basePrice;
 	}
+
 }
