@@ -13,7 +13,7 @@ public class PropertyDto {
 	private String state;
 	private String city;
 	private String area;
-	private List<RoomsDto> rooms;
+	private List<Room> rooms;
 	private List<String> imageUrls;
 	public long getId() {
 		return id;
@@ -69,10 +69,10 @@ public class PropertyDto {
 	public void setArea(String area) {
 		this.area = area;
 	}
-	public List<RoomsDto> getRooms() {
+	public List<Room> getRooms() {
 		return rooms;
 	}
-	public void setRooms(List<RoomsDto> rooms) {
+	public void setRooms(List<Room> rooms) {
 		this.rooms = rooms;
 	}
 	public List<String> getImageUrls() {

@@ -1,6 +1,6 @@
 package com.booking.dto;
 
-public class RoomsDto {
+public class Room {
 	private long id;
 	private String roomType;
     private double basePrice;
