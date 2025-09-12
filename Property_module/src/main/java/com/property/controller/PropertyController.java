@@ -7,6 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -58,7 +59,8 @@ public class PropertyController {
 
 		return new ResponseEntity<>(response, HttpStatus.valueOf(response.getStatus()));
 	}
-
+	
+	@GetMapping("/search-property")
 	public ResponseEntity<APIResponse<List<Property>>> searchProperty(@RequestParam String name,
 			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate localDate) {
 		APIResponse<List<Property>> response = propertyService.searchProperty(name, localDate);
@@ -66,16 +68,19 @@ public class PropertyController {
 		return new ResponseEntity<>(response, HttpStatus.valueOf(response.getStatus()));
 	}
 	
+	@GetMapping("/property-id")
 	public ResponseEntity<APIResponse<PropertyDto>> searchProperty(@RequestParam long id) {
 		APIResponse<PropertyDto> response = propertyService.findProperty(id);
 		return new ResponseEntity<>(response, HttpStatus.valueOf(response.getStatus()));
 	}
 	
+	@GetMapping("/room-id")
 	public ResponseEntity<APIResponse<Room>> findRoom(@RequestParam long id) {
 		APIResponse<Room> response = propertyService.findRoom(id);
 		return new ResponseEntity<>(response, HttpStatus.valueOf(response.getStatus()));
 	}
 	
+	@GetMapping("/roomAvailibility-id") 
 	public ResponseEntity<APIResponse<RoomAvailability>> findRoomAvailibility(@RequestParam long id) {
 		APIResponse<RoomAvailability> response = propertyService.findRoomAvailibility(id);
 		return new ResponseEntity<>(response, HttpStatus.valueOf(response.getStatus()));

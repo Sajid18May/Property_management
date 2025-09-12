@@ -140,11 +140,11 @@ public class PropertyService {
 		return null;
 	}
 	
-	public APIResponse<RoomAvailability> findRoomAvailibility(long id){
+	public APIResponse<List<RoomAvailability>> findRoomAvailibility(long id){
 
-		APIResponse<RoomAvailability> response =new APIResponse<>();
-		Optional<RoomAvailability> roomAvailibility = roomsAvailabilityRepository.findById(id);
-		response.setData(roomAvailibility.get());
+		APIResponse<List<RoomAvailability>> response =new APIResponse<>();
+		List<RoomAvailability> roomAvailibility = roomsAvailabilityRepository.findByRoomId(id);
+		response.setData(roomAvailibility);
 		response.setMessage("Got Availibility");
 		response.setStatus(200);
 		
