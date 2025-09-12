@@ -2,8 +2,6 @@ package com.property.dto;
 
 import java.util.List;
 
-import com.property.entity.PropertyPhotos;
-
 public class PropertyDto {
 	private long id;
 	private String name;

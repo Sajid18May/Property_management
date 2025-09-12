@@ -18,6 +18,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.property.dto.APIResponse;
 import com.property.dto.PropertyDto;
 import com.property.entity.Property;
+import com.property.entity.Room;
+import com.property.entity.RoomAvailability;
 import com.property.service.PropertyService;
 
 @RestController
@@ -61,6 +63,21 @@ public class PropertyController {
 			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate localDate) {
 		APIResponse<List<Property>> response = propertyService.searchProperty(name, localDate);
 
+		return new ResponseEntity<>(response, HttpStatus.valueOf(response.getStatus()));
+	}
+	
+	public ResponseEntity<APIResponse<PropertyDto>> searchProperty(@RequestParam long id) {
+		APIResponse<PropertyDto> response = propertyService.findProperty(id);
+		return new ResponseEntity<>(response, HttpStatus.valueOf(response.getStatus()));
+	}
+	
+	public ResponseEntity<APIResponse<Room>> findRoom(@RequestParam long id) {
+		APIResponse<Room> response = propertyService.findRoom(id);
+		return new ResponseEntity<>(response, HttpStatus.valueOf(response.getStatus()));
+	}
+	
+	public ResponseEntity<APIResponse<RoomAvailability>> findRoomAvailibility(@RequestParam long id) {
+		APIResponse<RoomAvailability> response = propertyService.findRoomAvailibility(id);
 		return new ResponseEntity<>(response, HttpStatus.valueOf(response.getStatus()));
 	}
 

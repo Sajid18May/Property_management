@@ -3,6 +3,7 @@ package com.property.service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -10,10 +11,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.property.dto.APIResponse;
 import com.property.dto.PropertyDto;
+import com.property.dto.RoomsDto;
 import com.property.entity.Area;
 import com.property.entity.City;
 import com.property.entity.Property;
 import com.property.entity.PropertyPhotos;
+import com.property.entity.Room;
+import com.property.entity.RoomAvailability;
 import com.property.entity.State;
 import com.property.repository.AreaRepository;
 import com.property.repository.CityRepository;
@@ -77,24 +81,23 @@ public class PropertyService {
 		property.setState(state);
 
 		Property savedProperty = propertyRepository.save(property);
-//		List<String> fileUrls=s3Service.uploadFiles(files);
-//		List<PropertyPhotos> propertyphotos=new ArrayList<>();
-//		for(String url:fileUrls) {
-//			PropertyPhotos photos=new PropertyPhotos();
-//			photos.setUrl(url);
-//			photos.setProperty(savedProperty);
-//			photosRepository.save(photos);
-//			propertyphotos.add(photos);
-//		}
+		List<String> fileUrls=s3Service.uploadFiles(files);
+		List<PropertyPhotos> propertyphotos=new ArrayList<>();
+		for(String url:fileUrls) {
+			PropertyPhotos photos=new PropertyPhotos();
+			photos.setUrl(url);
+			photos.setProperty(savedProperty);
+			photosRepository.save(photos);
+			propertyphotos.add(photos);
+		}
 		PropertyDto dto = new PropertyDto();
 		
 		BeanUtils.copyProperties(savedProperty, dto);
 		dto.setArea(savedProperty.getArea().getName());
 		dto.setCity(savedProperty.getCity().getName());
 		dto.setState(savedProperty.getState().getName());
-		//dto.setImgUrls(fileUrls);
+		dto.setImgUrls(fileUrls);
 		return dto;
-		//return propertyDto;
 	}
 	
 	public APIResponse<List<Property>> searchProperty(String name,LocalDate date) {
@@ -109,6 +112,53 @@ public class PropertyService {
 		response.setMessage("Property Found");
 		response.setStatus(200);
 		response.setData(properties);
+		return response;
+	}
+	public APIResponse<PropertyDto> findProperty(long id) {
+		APIResponse<PropertyDto> response =new APIResponse<>();
+		Optional<Property> property = propertyRepository.findById(id);
+		PropertyDto dto=new PropertyDto();
+		if(property.isPresent()) {
+			BeanUtils.copyProperties(property.get(), dto);
+			dto.setArea(property.get().getArea().getName());
+			dto.setCity(property.get().getCity().getName());
+			dto.setState(property.get().getState().getName());
+			List<Room> rooms=property.get().getRooms();
+			List<RoomsDto> roomsDto=new ArrayList<>();
+			for(Room room:rooms) {
+				RoomsDto roomDto=new RoomsDto();
+				BeanUtils.copyProperties(room, roomDto);
+				roomsDto.add(roomDto);
+			}
+			dto.setRooms(roomsDto);
+			response.setMessage("Matching Record");
+			response.setStatus(200);
+			response.setData(dto);
+			return response;
+		}
+		
+		return null;
+	}
+	
+	public APIResponse<RoomAvailability> findRoomAvailibility(long id){
+
+		APIResponse<RoomAvailability> response =new APIResponse<>();
+		Optional<RoomAvailability> roomAvailibility = roomsAvailabilityRepository.findById(id);
+		response.setData(roomAvailibility.get());
+		response.setMessage("Got Availibility");
+		response.setStatus(200);
+		
+		return response;
+	}
+	
+	public APIResponse<Room> findRoom(long id){
+		APIResponse<Room> response=new APIResponse<>();
+		Optional<Room> room = roomsRepository.findById(id);
+		
+		response.setData(room.get());
+		response.setMessage("Got Room");
+		response.setStatus(200);
+		
 		return response;
 	}
 
