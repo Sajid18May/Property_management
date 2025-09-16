@@ -81,8 +81,8 @@ public class PropertyController {
 	}
 	
 	@GetMapping("/roomAvailibility-id") 
-	public ResponseEntity<APIResponse<RoomAvailability>> findRoomAvailibility(@RequestParam long id) {
-		APIResponse<RoomAvailability> response = propertyService.findRoomAvailibility(id);
+	public ResponseEntity<APIResponse<List<RoomAvailability>>> findRoomAvailibility(@RequestParam long id) {
+		APIResponse<List<RoomAvailability>> response = propertyService.findRoomAvailibility(id);
 		return new ResponseEntity<>(response, HttpStatus.valueOf(response.getStatus()));
 	}
 

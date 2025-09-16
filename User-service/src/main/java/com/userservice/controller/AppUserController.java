@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,30 +29,30 @@ public class AppUserController {
 		this.authenticationManager = authenticationManager;
 	}
 
-	@GetMapping("/register")
+	@PostMapping("/register")
 	public ResponseEntity<APIResponse<String>> userRegistration(@RequestBody AppUserDto appUserDto) {
 		APIResponse<String> response = appUserService.registerAppUser(appUserDto);
-		return new ResponseEntity<APIResponse<String>>(HttpStatusCode.valueOf(response.getStatus()));
+		return new ResponseEntity<APIResponse<String>>(response,HttpStatusCode.valueOf(response.getStatus()));
 	}
 
-	@GetMapping("/login")
+	@PostMapping("/login")
 	public ResponseEntity<APIResponse<String>> userLogin(@RequestBody LoginDto loginDto) {
 		APIResponse<String> response = new APIResponse<>();
 		UsernamePasswordAuthenticationToken UsernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
 				loginDto.getUsername(), loginDto.getPassword());
 		Authentication authentication = authenticationManager.authenticate(UsernamePasswordAuthenticationToken);
 		if (authentication.isAuthenticated()) {
-			jwtService.generateJwtToken(loginDto.getUsername(),
+			String jwtToken = jwtService.generateJwtToken(loginDto.getUsername(),
 					authentication.getAuthorities().iterator().next().getAuthority());
-			response.setMessage("Login Successful");
+			response.setMessage("Welcome "+loginDto.getUsername());
 			response.setStatus(200);
-			response.setData("Welcome "+loginDto.getUsername());
-			return new ResponseEntity<APIResponse<String>>(HttpStatusCode.valueOf(response.getStatus()));
+			response.setData(jwtToken);
+			return new ResponseEntity<APIResponse<String>>(response,HttpStatusCode.valueOf(response.getStatus()));
 		}
 		response.setMessage("Login Failed");
 		response.setStatus(401);
 		response.setData("Wrong username or Password");
-		return new ResponseEntity<APIResponse<String>>(HttpStatusCode.valueOf(response.getStatus()));
+		return new ResponseEntity<APIResponse<String>>(response,HttpStatusCode.valueOf(response.getStatus()));
 	}
 
 }
