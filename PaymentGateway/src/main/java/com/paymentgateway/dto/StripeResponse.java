@@ -5,6 +5,15 @@ public class StripeResponse {
     private String message;
     private String sessionId;
     private String sessionUrl;
+    
+	public StripeResponse() {
+	}
+	public StripeResponse(String status, String message, String sessionId, String sessionUrl) {
+		this.status = status;
+		this.message = message;
+		this.sessionId = sessionId;
+		this.sessionUrl = sessionUrl;
+	}
 	public String getStatus() {
 		return status;
 	}
