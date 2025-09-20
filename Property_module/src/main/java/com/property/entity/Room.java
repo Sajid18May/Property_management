@@ -1,5 +1,7 @@
 package com.property.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,6 +20,7 @@ public class Room {
 	
 	@ManyToOne
 	@JoinColumn(name = "property_id")
+	@JsonBackReference
 	private Property property;
 
 	public long getId() {
