@@ -21,7 +21,7 @@ public class GatewayService {
 	private String STRIPE_KEY;
 
 	public StripeResponse checkoutProducts(ProductRequest productRequest) {
-
+		long bookingId = productRequest.getBookingId();
 		Stripe.apiKey = STRIPE_KEY;
 
 		ProductData productData = ProductData.builder().setName(productRequest.getName()).build();
@@ -34,8 +34,8 @@ public class GatewayService {
 				.build();
 		
 		SessionCreateParams params = SessionCreateParams.builder().setMode(Mode.PAYMENT)
-				.setSuccessUrl("http://localhost:8080/success")
-                .setCancelUrl("http://localhost:8080/cancel")
+				.setSuccessUrl("http://localhost:9094/product/v1/success?session_id={CHECKOUT_SESSION_ID}&booking_Id="+bookingId)
+                .setCancelUrl("http://localhost:9094/cancel")
                 .addLineItem(lineItem)
                 .build();
 		

@@ -5,6 +5,13 @@ public class ProductRequest {
     private Long quantity;
     private String name;
     private String currency;
+    private Long bookingId;
+	public Long getBookingId() {
+		return bookingId;
+	}
+	public void setBookingId(Long bookingId) {
+		this.bookingId = bookingId;
+	}
 	public Long getAmount() {
 		return amount;
 	}
