@@ -3,10 +3,13 @@ package com.booking.controller;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.booking.client.BookingClient;
@@ -82,12 +85,22 @@ public class BookingController {
 					bookingDate.setDate(date);
 					bookingDate.setBookings(savedBooking);
 					bookingDateRepository.save(bookingDate);
-				}
-				
-				
-				
-				
+				}		
 				return null;
+	}
+	
+	@PutMapping("/api/v1/booking/update-status-booking")
+	public boolean updateBooking(@RequestParam long id) {
+		Optional<Bookings> booking = bookingRepository.findById(id);
+		if(booking.isPresent()) {
+			Bookings bookings=new Bookings();
+			bookings.setStatus("Confirmed");
+			Bookings savedBooking = bookingRepository.save(bookings);
+			if(savedBooking!=null) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }
