@@ -89,11 +89,11 @@ public class BookingController {
 				return null;
 	}
 	
-	@PutMapping("/api/v1/booking/update-status-booking")
+	@PutMapping("/update-status-booking")
 	public boolean updateBooking(@RequestParam long id) {
 		Optional<Bookings> booking = bookingRepository.findById(id);
 		if(booking.isPresent()) {
-			Bookings bookings=new Bookings();
+			Bookings bookings=booking.get();
 			bookings.setStatus("Confirmed");
 			Bookings savedBooking = bookingRepository.save(bookings);
 			if(savedBooking!=null) {
