@@ -6,6 +6,7 @@ public class ProductRequest {
     private String name;
     private String currency;
     private Long bookingId;
+    
 	public Long getBookingId() {
 		return bookingId;
 	}
